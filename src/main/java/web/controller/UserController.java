@@ -7,15 +7,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.User;
+import web.service.UserService;
 import web.service.UserServiceInterface;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class UpdateController {
+public class SelectController {
     @Autowired
-    UserServiceInterface userService;
+    private UserServiceInterface userService;
+
+    @RequestMapping(value = "select", method = RequestMethod.GET)
+    public String getUsers(ModelMap model) throws SQLException {
+        List<User> users =  userService.getAllUser();
+        model.addAttribute("users", users);
+        return "select";
+    }
+
+    @RequestMapping(value = "select",  method = RequestMethod.POST)
+    public String insertUser(User user) throws SQLException {
+        userService.addUser(user);
+        return "redirect:select";
+    }
 
     @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String getUserById(ModelMap model, @RequestParam(name = "id") long id) throws SQLException {
@@ -25,10 +40,13 @@ public class UpdateController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateUser(@RequestParam(name = "id") long id, @RequestParam(name = "name") String name, @RequestParam(name = "password")
-            String password, @RequestParam(name = "age") int age) throws SQLException {
-        userService.updateUser(new User(id, name, password, age));
+    public String updateUser(User user) throws SQLException {
+        userService.updateUser(user);
         return "redirect:select";
     }
-
+    @RequestMapping("/delete")
+    public String deleteUserById(@RequestParam(name = "id") long id) throws SQLException {
+        userService.deleteClient(id);
+        return "redirect:select";
+    }
 }
