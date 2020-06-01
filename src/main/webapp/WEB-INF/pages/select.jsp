@@ -19,13 +19,15 @@
     <input type="text" name="name" placeholder="name"/>
     <input type="text" name="password" placeholder="password"/>
     <input type="text" name="age" placeholder="age"/>
-    <button type="submit" formaction="/select">INSERT</button>
+    <input type="text" name="roles" placeholder="roles"/>
+    <button type="submit" formaction="/admin/select">INSERT</button>
 
     <table>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>age</th>
+            <th>roles</th>
         </tr>
         <tbody>
         <!--   for (Todo todo: todos) {  -->
@@ -34,16 +36,21 @@
                 <td>${user.id}</td>
                 <td>${user.name}</td>
                 <td>${user.age}</td>
+                <td>
+                    <c:forEach items="${user.roles}" var="role">${role.name}; </c:forEach>
+                </td>
+
 
                 <td>
-                    <a href="/update?id=${user.id}">Update</a>
-                    <a href="/delete?id=${user.id}">DELETE</a>
+                    <a href="/admin/update?id=${user.id}">Update</a>
+                    <a href="/admin/delete?id=${user.id}">DELETE</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </form>
-
+<a href="/user">userINFO</a>
+<a href="/logout">Logout</a>
 </body>
 </html>

@@ -1,25 +1,27 @@
 package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import web.dao.UserDAO;
 import web.dao.UserHibernateDAO;
 import web.model.User;
 
+import javax.persistence.EntityManager;
 import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class UserService implements  UserServiceInterface{
+public class UserService implements  UserServiceInterface {
     @Autowired
-    UserHibernateDAO userDAO;
+    private UserDAO userDAO;
+
     @Transactional
     public boolean deleteClient(long id) throws SQLException {
-        if (userDAO.deleteUser(id)) {
-            return true;
-        } else {
-            return false;
-        }
+        return userDAO.deleteUser(id);
     }
 
     @Transactional
@@ -28,32 +30,21 @@ public class UserService implements  UserServiceInterface{
     }
     @Transactional
     public User getUserById(long id) throws SQLException {
-
-        List<User> users = userDAO.selectUsers();
-        for (User user1 : users) {
-            if (user1.getId() == id) {
-                return user1;
-            }
-        }
-        return new User();
+       return userDAO.getUserById(id);
     }
     @Transactional
     public boolean addUser(User user) throws SQLException {
-        List<User> users = getAllUser();
-        if (users.isEmpty()) {
-            userDAO.addUser(user);
-        } else {
-            for (User user1 : users) {
-                if (user1.getId() == user.getId()) {
-                    return false;
-                }
-            }
-            userDAO.addUser(user);
-        }
-        return true;
+        return userDAO.addUser(user);
+
     }
     @Transactional
     public boolean updateUser(User user) {
         return userDAO.updateUser(user);
+    }
+
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userDAO.getUserByName(s);
     }
 }

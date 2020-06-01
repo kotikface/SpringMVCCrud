@@ -10,43 +10,16 @@ import web.model.User;
 import web.service.UserService;
 import web.service.UserServiceInterface;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
-public class SelectController {
-    @Autowired
-    private UserServiceInterface userService;
+@RequestMapping("/user")
+public class UserController {
 
-    @RequestMapping(value = "select", method = RequestMethod.GET)
-    public String getUsers(ModelMap model) throws SQLException {
-        List<User> users =  userService.getAllUser();
-        model.addAttribute("users", users);
-        return "select";
-    }
-
-    @RequestMapping(value = "select",  method = RequestMethod.POST)
-    public String insertUser(User user) throws SQLException {
-        userService.addUser(user);
-        return "redirect:select";
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.GET)
-    public String getUserById(ModelMap model, @RequestParam(name = "id") long id) throws SQLException {
-        User user =  userService.getUserById(id);
-        model.addAttribute("userById", user);
-        return "update";
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String updateUser(User user) throws SQLException {
-        userService.updateUser(user);
-        return "redirect:select";
-    }
-    @RequestMapping("/delete")
-    public String deleteUserById(@RequestParam(name = "id") long id) throws SQLException {
-        userService.deleteClient(id);
-        return "redirect:select";
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String userInfo() {
+        return "user";
     }
 }

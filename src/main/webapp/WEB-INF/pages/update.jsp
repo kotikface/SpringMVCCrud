@@ -22,7 +22,8 @@
     <input type="text" name="name"   value='${userById.name}'/>
     <input type="text" name="password"   value='${userById.password}'/>
     <input type="text" name="age"  value='${userById.age}'/>
-    <button type="submit" formaction="/update">UPDATE</button>
+    <input type="text" name="roles" value=${userById.roles}>
+    <button type="submit" formaction="/admin/update">UPDATE</button>
 </form>
 </body>
 </html>

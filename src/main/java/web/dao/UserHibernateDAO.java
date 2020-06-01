@@ -1,10 +1,13 @@
 package web.dao;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 @Repository
 public class UserHibernateDAO implements UserDAO {
@@ -34,5 +37,16 @@ public class UserHibernateDAO implements UserDAO {
     public boolean updateUser(User user) {
         sessionFactory.getCurrentSession().update(user);
         return true;
+    }
+
+    @Override
+    public User getUserById(long id) {
+         return sessionFactory.getCurrentSession().get(User.class, id);
+
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        return (User) sessionFactory.getCurrentSession().createQuery("select u from User u where name = :name").setParameter("name", name).getSingleResult();
     }
 }
