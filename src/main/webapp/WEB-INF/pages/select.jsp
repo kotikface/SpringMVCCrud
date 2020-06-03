@@ -1,4 +1,4 @@
-<%@ page import="web.service.UserService" %>
+<%@ page import="web.service.UserServiceImpl" %>
 <%@ page import="java.util.List" %>
 <%@ page import="web.model.User" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--

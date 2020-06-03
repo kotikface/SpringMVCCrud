@@ -2,11 +2,12 @@ package web.dao;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
+import web.model.Role;
 import web.model.User;
 
 import java.sql.SQLException;
 import java.util.List;
-@Repository
+
 public interface UserDAO {
 
     boolean addUser(User user);
@@ -17,4 +18,6 @@ public interface UserDAO {
     User getUserById(long id);
 
     UserDetails getUserByName(String s);
+
+
 }

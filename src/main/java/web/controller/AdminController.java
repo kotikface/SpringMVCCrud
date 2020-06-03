@@ -1,7 +1,5 @@
 package web.controller;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Role;
 import web.model.User;
-import web.service.UserServiceInterface;
+import web.service.UserService;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +19,7 @@ import java.util.Set;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    private UserServiceInterface userService;
+    private UserService userService;
 
     @RequestMapping(value = "/select", method = RequestMethod.GET)
     public String getUsers(ModelMap model) throws SQLException {
